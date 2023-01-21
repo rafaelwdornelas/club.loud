@@ -41,23 +41,27 @@ func get_content() {
 		} else {
 			var data Creators
 			json.Unmarshal(body, &data)
+			abertostmp := abertos
+			abertos = nil
+			fmt.Println(len(data), "criadores encontrados")
 			//loop
 			for i := 0; i < len(data); i++ {
 				//verifica se já foi aberto antes
-				if contains(abertos, data[i].Username) {
+				if contains(abertostmp, data[i].Username) {
 					log.Println(data[i].Username + " Já foi aberto")
-
+					abertos = append(abertos, data[i].Username)
 				} else {
 
 					abertos = append(abertos, data[i].Username)
 					open(data[i].ChannelURL)
+					log.Println(data[i].Username + " aberto")
 				}
 			}
 		}
 	}
 
-	//aguardar 5 minutos
-	time.Sleep(5 * time.Minute)
+	//aguardar 1 minutos
+	time.Sleep(1 * time.Minute)
 	//chamar a função novamente
 	get_content()
 }
