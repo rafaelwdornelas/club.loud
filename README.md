@@ -6,3 +6,5 @@ go run .
 
 comando para compilar:
 go build .
+
+fim
